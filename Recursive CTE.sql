@@ -11,4 +11,4 @@ WHERE Ancestor.p = PARENTOF.CHILD
 
 )
 SELECT *
-FROM Ancestor 
+FROM Ancestor ;
