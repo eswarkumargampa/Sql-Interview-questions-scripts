@@ -1,0 +1,46 @@
+RESTORE DATABASE SOURCE FROM DISK = 'D:\Backup\SOURCE_20200330.BAK'
+
+BACKUP DATABASE SOURCE TO DISK = 'D:\Backup\SOURCE.BAK'
+
+RESTORE DATABASE SOURCE FROM DISK = 'D:\Backup\SOURCE.BAK'
+
+
+
+USE [master]
+GO
+
+IF EXISTS(SELECT 1 FROM SYS.DATABASES WHERE Name= 'SOURCE')
+
+ALTER DATABASE SOURCE SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+RESTORE DATABASE SOURCE FROM DISK = 'D:\BackUP\SOURCE.bak'
+WITH REPLACE, FILE = 1, NOUNLOAD, STATS = 10,
+MOVE 'SOURCE' TO 'D:\Databases\SOURCE.mdf',
+MOVE 'SOURCE_Log' TO 'D:\Databases\SOURCE_Log.ldf'
+ALTER DATABASE SOURCE SET MULTI_USER;
+
+
+
+SELECT *
+FROM SOURCE..TESTTABLE
+ORDER BY DatabaseLogID
+
+
+SELECT * FROM SOURCE..TESTTABLE WHERE DatabaseLogID = 1
+
+UPDATE SOURCE..TESTTABLE SET PostTime = GETDATE()+5 WHERE DatabaseLogID = 1
+
+SELECT * FROM SOURCE..TESTTABLE WHERE DatabaseLogID = 1
+
+
+USE SOURCE
+GO
+
+EXEC sp_addrolemember N'db_datawriter', N'hanmanthk'  
+EXEC sp_addrolemember N'db_datareader', N'hanmantthk' 
+
+GO
+
+
+
+ EXEC sp_addrolemember N''db_datareader'', [TipsDemoUser];
+ EXEC sp_addrolemember N''db_datawriter'', [TipsDemoUser]

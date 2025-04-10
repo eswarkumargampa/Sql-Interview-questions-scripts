@@ -1,0 +1,21 @@
+DROP TABLE IF EXISTS EMP
+
+CREATE TABLE EMP (
+ID INT IDENTITY (1,1),
+EMPID INT,
+EMPNAME VARCHAR(10),
+SAL INT
+)
+
+INSERT INTO EMP VALUES (1,'A',1000),(1,'A',1000),(1,'A',1000),(2,'B',2000),(2,'B',2000),(3,'C',500)
+,(3,'C',500),(3,'C',500),(4,'D',5000)
+
+--Query to delete duplicates with out using cte and rownumber for the column having primary key 
+
+DELETE FROM EMP WHERE ID NOT IN (
+SELECT MIN(ID)
+FROM EMP 
+GROUP BY EMPID,EMPNAME,SAL
+)
+
+SELECT * FROM EMP

@@ -1,0 +1,17 @@
+CREATE TRIGGER SUNDAY
+ON AdventureWorks2017.dbo.SSIS1
+FOR INSERT,UPDATE,DELETE 
+AS
+BEGIN
+
+IF  DATENAME(DW,GETDATE()) = 'Sunday'
+
+ROLLBACK 
+
+PRINT 'No Transactions are allowed on Sunday'
+
+END
+
+DELETE
+FROM AdventureWorks2017.dbo.SSIS1 
+WHERE StateProvinceID = 79

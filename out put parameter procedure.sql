@@ -1,0 +1,17 @@
+CREATE Procedure ADDtwo (
+@I INT,
+@II INT,
+@C INT  OUTPUT
+)
+AS 
+BEGIN
+
+SET @C = @I+@II
+
+RETURN @C 
+
+END
+
+DECLAre @D INT ;
+EXEC ADDtwo 1,2,@D OUTPUT
+SELECT  @D 

@@ -1,0 +1,36 @@
+CREATE Function dbo.OddNumbers (@ID INT)
+RETURNS   @ODDTABLE TABLE(
+ODDNUMBER INT
+)
+
+
+AS
+BEGIN 
+
+WITH CTE AS (
+
+SELECT 1 AS N
+
+UNION ALL
+
+SELECT N+1
+FROM CTE 
+WHERE N < @ID 
+)
+ INSERT INTO @ODDTABLE (OddNumber)
+SELECT N
+FROM CTE 
+WHERE N%2 <> 0
+
+RETURN ;
+
+END
+
+
+
+---Execution 
+
+DECLARE @TEXT INT = 30;
+
+SELECT OddNumber
+FROM dbo.OddNumbers(@TEXT);

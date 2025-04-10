@@ -1,0 +1,17 @@
+CREATE FUNCTION Multiple (
+@A INT,
+@B INT
+)
+RETURNS INT 
+AS 
+BEGIN 
+
+DECLARE @C INT
+
+SET @C = @A * @B
+
+RETURN @C
+
+END
+
+SELECT dbo.Multiple (3,17)
